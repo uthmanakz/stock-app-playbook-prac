@@ -23,7 +23,7 @@
         state: started
 
     - name: Adding hosts in nginx.conf file
-      templates:
+      template:
        src: templates/nginx.conf.j2
        dest: /etc/nginx/nginx.conf
       vars:
