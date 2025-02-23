@@ -60,4 +60,51 @@
      state: present
     when: ansible_facts ['distribution'] in ['Ubuntu']
 
- 
+  - name: Building Java Application
+    shell: mvn clean install 
+    args:
+     chdir: /home/ec2-user/stockprice
+    register: build_output
+    when: ansible_facts ['distribution'] in ['Amazon']
+
+  - name: Building Java Application
+    shell: mvn clean install 
+    args:
+     chdir: /home/ubuntu/stockprice
+    register: build_output
+    when: ansible_facts ['distribution'] in ['Ubuntu']
+    
+
+  - name: Show Build Logs
+    debug: 
+      var: build_output.stdout_lines 
+
+  - name: Creating Service file
+    file:
+     path: /etc/systemd/system/stockprice.service
+     state: touch
+  
+  - name: Configuring stockprice.service file
+    template:
+     src: templates/stockprice.service.j2
+     dest: /etc/systemd/system/stockprice.service
+    vars:
+     node_user: "ec2-user"
+    when: ansible_facts ['distribution'] in ['Amazon']
+
+  - name: Configuring stockprice.service file
+    template:
+     src: templates/stockprice.service.j2
+     dest: /etc/systemd/system/stockprice.service
+    vars:
+     node_user: "ubuntu"
+    when: ansible_facts ['distribution'] in ['Ubuntu']
+
+  - name: Reloading stockprice.service 
+    systemd:
+     daemon_reload: yes
+
+  - name: Starting the stockprice.service 
+    systemd:
+     name: stockprice.service
+     state: started
