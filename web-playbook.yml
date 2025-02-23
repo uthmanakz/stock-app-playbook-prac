@@ -21,3 +21,24 @@
       service:
         name: nginx
         state: started
+
+    - name: Adding hosts in nginx.conf file
+      templates:
+       src: templates/nginx.conf.j2
+       dest: /etc/nginx/nginx.conf
+      vars:
+       nginx_user: 'nginx'
+      when: ansible_facts ['distribution'] in ['Amazon']
+
+    - name: Adding host in nginx.conf file
+      template:
+       src: templates/nginx.conf.j2
+       dest: /etc/nginx/nginx.conf
+      vars: 
+       nginx_user: 'www-wdata'
+      when: ansible_facts ['distribution'] in ['Amazon'] 
+
+    - name: Reloading nginx.conf file 
+      service:
+       name: nginx
+       state: reloaded
