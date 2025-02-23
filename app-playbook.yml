@@ -1,0 +1,63 @@
+---
+- name: Deploying Java Application
+  become: true
+  hosts: apps
+  gather_facts: true
+
+  tasks:
+  - name: Installing Git In Amazon Linux OS
+    yum: 
+     name: git
+     state: present
+    when: ansible_facts ['distribution'] in ['Amazon']
+
+
+  - name: Installing Git in Ubuntu OS
+    apt: 
+     name: git
+     state: present
+    when: ansible_facts ['distribution'] in ['Ubuntu']
+
+
+  - name: Cloning Git Repo
+    git:
+     repo: https://github.com/techbleat/stockprice.git
+     dest: /home/ec2-user/stockprice
+    when: ansible_facts ['distribution'] in ['Amazon']
+
+  - name: Cloning Git Repo
+    git:
+     repo: https://github.com/techbleat/stockprice.git
+     dest: /home/ubuntu/stockprice
+    when: ansible_facts ['distribution'] in ['Ubuntu']
+  
+  - name: Installing Java on Amazon Linux OS
+    yum:
+     name: java-17-amazon-corretto
+     state:  "{{ java_state }}"
+    when: ansible_facts ['distribution'] in ['Amazon']
+
+  - name: Update apt package list
+    apt:
+      update_cache: yes
+    when: ansible_facts ['distribution'] in ['Ubuntu']
+
+  - name: Installing Java on Ubuntu OS
+    apt:
+     name: openjdk-17-jdk
+     state: "{{ java_state }}"
+    when: ansible_facts ['distribution'] in ['Ubuntu']
+
+  - name: Installing Maven on Amazon Linux OS
+    yum:
+     name: maven
+     state: "{{ maven_state }}"
+    when: ansible_facts ['distribution'] in ['Amazon']
+
+  - name: Installing Maven on Ubuntu OS
+    apt:
+     name: maven
+     state: "{{ maven_state }}"
+    when: ansible_facts ['distribution'] in ['Ubuntu']
+
+ 
