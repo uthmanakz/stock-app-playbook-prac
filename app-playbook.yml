@@ -1,7 +1,7 @@
 ---
 - name: Deploying Java Application
   become: true
-  hosts: apps
+  hosts: dev_app
   gather_facts: true
 
   tasks:
@@ -34,7 +34,7 @@
   - name: Installing Java on Amazon Linux OS
     yum:
      name: java-17-amazon-corretto
-     state:  "{{ java_state }}"
+     state:  present
     when: ansible_facts ['distribution'] in ['Amazon']
 
   - name: Update apt package list
@@ -45,19 +45,19 @@
   - name: Installing Java on Ubuntu OS
     apt:
      name: openjdk-17-jdk
-     state: "{{ java_state }}"
+     state: present
     when: ansible_facts ['distribution'] in ['Ubuntu']
 
   - name: Installing Maven on Amazon Linux OS
     yum:
      name: maven
-     state: "{{ maven_state }}"
+     state: present
     when: ansible_facts ['distribution'] in ['Amazon']
 
   - name: Installing Maven on Ubuntu OS
     apt:
      name: maven
-     state: "{{ maven_state }}"
+     state: present
     when: ansible_facts ['distribution'] in ['Ubuntu']
 
  
