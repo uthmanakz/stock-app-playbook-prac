@@ -8,6 +8,10 @@
      file:
       path: /home/ec2-user/prometheus.yml
       state: touch
+   - name: Configuring prometheus.yml
+     template:
+      src: templates/prometheus.yml.j2
+      dest: /home/ec2-user/prometheus.yml
 
    - name: Install  docker
      yum:
