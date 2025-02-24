@@ -49,7 +49,7 @@
 
     - name: Configuring docker-compose.yml file
       template:
-       src: templates/docker-compose.yml
+       src: templates/docker-compose.yml.j2
        dest: /home/ec2-user/docker-folder/docker-compose.yml
       when: ansible_facts ['distribution'] in ['Amazon']
 
@@ -62,7 +62,7 @@
 
     - name: Configuring docker-compose.yml file
       template:
-       src: templates/docker-compose.yml
+       src: templates/docker-compose.yml.j2
        dest: /home/ubuntu/docker-folder/docker-compose.yml
       when: ansible_facts ['distribution'] in ['Ubuntu']
 
