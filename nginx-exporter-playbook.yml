@@ -2,7 +2,9 @@
 - name: Installing nginx-exporter on monitor node
   become: true
   hosts: dev_monitor
-  gather_facts:
+  gather_facts: true
+
+  tasks:
 
    - name: Install  docker
      yum:
