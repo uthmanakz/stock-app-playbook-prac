@@ -24,7 +24,7 @@
    - name: Running Prometheus
      yum: 
       name: git
-      service: present
+      state: present
 
    - name: Running Prometheus
      git: 
