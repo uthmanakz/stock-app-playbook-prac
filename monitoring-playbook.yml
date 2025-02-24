@@ -29,5 +29,5 @@
    - name: Running Prometheus
      git: 
       repo: 'https://github.com/uthmanakz/docker-folder.git'
-      service: present
+      dest: /home/ec2-user/docker-folder
     
