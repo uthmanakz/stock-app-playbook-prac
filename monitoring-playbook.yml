@@ -6,7 +6,7 @@
   tasks:
    - name: Creating prometheus.yml file
      file:
-      path: /home/ec2-user/prometheus/prometheus.yml
+      path: /home/ec2-user/prometheus.yml
       state: touch
 
    - name: Install  docker
