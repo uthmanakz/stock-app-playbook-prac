@@ -4,5 +4,5 @@ nginx-prometheus-exporter:
       - "9113:9113"
     command:
       {% for host in groups['dev_web'] %}
-      - "--nginx.scrape-uri=http://{{ hostvars[host]['public_ip_address }}:80/stub_status"
+      - "--nginx.scrape-uri=http://{{ hostvars[host]['public_ip_address'] }}:80/stub_status"
       {% endfor %}
