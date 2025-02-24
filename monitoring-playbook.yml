@@ -4,6 +4,11 @@
   gather_facts: true 
 
   tasks:
+   - name: Creating prometheus.yml file
+     file:
+      path: /home/ec2-user/prometheus/prometheus.yml
+      state: touch
+
    - name: Install  docker
      yum:
       name: docker
