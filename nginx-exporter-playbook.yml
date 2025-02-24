@@ -1,72 +1,43 @@
 ---
-- name: Installing nginx on web nodes
+- name: Installing nginx-exporter on monitor node
   become: true
-  hosts: dev_web
+  hosts: dev_prom
   gather_facts:
 
-  tasks:
-    - name: Install Docker
-      yum:
-        name: docker
-        state: present
-      when: ansible_facts ['distribution'] in ['Amazon']
+   - name: Install  docker
+     yum:
+      name: docker
+      state: present
 
-    - name: Install Docker 
-      apt:
-       name: docker.io
-       state: present
-      when: ansible_facts ['distribution'] in ['Ubuntu']
+   - name: Install  docker
+     service:
+      name: docker
+      state: started
+   
 
-    - name: Start Docker
-      service:
-        name: docker
-        state: started
+   - name: Install Docker-Compose
+     shell: |
+      curl -L https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m) \
+      -o /usr/local/bin/docker-compose
+      chmod +x /usr/local/bin/docker-compose
 
-    - name: Install Docker-Compose
-      shell: |
-        curl -L https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m) \
-        -o /usr/local/bin/docker-compose
-        chmod +x /usr/local/bin/docker-compose
+   - name: Install Git
+     yum: 
+      name: git
+      state: present
 
-    - name: Installing Git
-      yum:
-        name: git
-        state: present
-      when: ansible_facts ['distribution'] in ['Amazon']
+   - name: Git clone docker-compose file
+     git: 
+      repo: 'https://github.com/uthmanakz/docker-folder.git'
+      dest: /home/ec2-user/docker-folder/
 
-    - name: Installing Git
-      apt:
-        name: git
-        state: present
-      when: ansible_facts ['distribution'] in ['Ubuntu']
-
-
-    - name: Cloning docker-compose.yml file
-      git:
-        repo: 'https://github.com/uthmanakz/docker-folder.git'
-        dest: /home/ec2-user/docker-folder/
-      when: ansible_facts ['distribution'] in ['Amazon']
-
-    - name: Configuring docker-compose.yml file
-      template:
-       src: templates/docker-compose.yml.j2
-       dest: /home/ec2-user/docker-folder/docker-compose.yml
-      when: ansible_facts ['distribution'] in ['Amazon']
-
-
-    - name: Cloning docker-compose.yml file
-      git:
-        repo: 'https://github.com/uthmanakz/docker-folder.git'
-        dest: /home/ubuntu/docker-folder/
-      when: ansible_facts ['distribution'] in ['Ubuntu']
-
-    - name: Configuring docker-compose.yml file
-      template:
-       src: templates/docker-compose.yml.j2
-       dest: /home/ansible/docker-folder/docker-compose.yml
-      when: ansible_facts ['distribution'] in ['Ubuntu']
-
-    - name: Running docker-compose file
-      shell: |
-        cd docker-folder
-        docker-compose up -d nginx-prometheus-exporter
+   - name: Configuring prometheus.yml
+     template:
+      src: templates/docker-compose.yml.j2
+      dest: /home/ec2-user/docker-folder/docker-compose.yml
+    
+  
+   - name: Running Prometheus/Grafana as docker container
+     shell: |
+      cd docker-folder
+      docker-compose up -d prometheus grafana
