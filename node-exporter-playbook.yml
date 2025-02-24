@@ -47,10 +47,23 @@
         dest: /home/ec2-user/docker-folder/
       when: ansible_facts ['distribution'] in ['Amazon']
 
+    - name: Configuring docker-compose.yml file
+      template:
+       src: templates/docker-compose.yml
+       dest: /home/ec2-user/docker-folder/docker-compose.yml
+      when: ansible_facts ['distribution'] in ['Amazon']
+
+
     - name: Cloning docker-compose.yml file
       git:
         repo: 'https://github.com/uthmanakz/docker-folder.git'
         dest: /home/ubuntu/docker-folder/
+      when: ansible_facts ['distribution'] in ['Ubuntu']
+
+    - name: Configuring docker-compose.yml file
+      template:
+       src: templates/docker-compose.yml
+       dest: /home/ubuntu/docker-folder/docker-compose.yml
       when: ansible_facts ['distribution'] in ['Ubuntu']
 
 
@@ -58,4 +71,4 @@
     - name: Running docker-compose file
       shell: |
         cd docker-folder
-        docker-compose up -d node_exporter
+        docker-compose up -d node_exporter 

@@ -8,3 +8,6 @@ scrape_configs:
       {% for host in groups['dev_nodes'] %}
       - "{{ hostvars[host]['public_ip_address'] }}:9100"
       {% endfor %}
+      {% for host in groups['dev_web'] %}
+      - "{{ hostvars[host]['public_ip_address'] }}:9113"
+      {% endfor %}
