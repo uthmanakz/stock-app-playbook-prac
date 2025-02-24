@@ -58,4 +58,4 @@
     - name: Running docker-compose file
       shell: |
         cd docker-folder
-        docker-compose up -d
+        docker-compose up -d node_exporter
