@@ -29,7 +29,7 @@
    - name: Git clone docker-compose file
      git: 
       repo: 'https://github.com/uthmanakz/docker-folder.git'
-      dest: /home/ec2-user/docker-folder
+      dest: /home/ec2-user/docker-folder/
     
    - name: Running Prometheus as docker container
      shell: |
