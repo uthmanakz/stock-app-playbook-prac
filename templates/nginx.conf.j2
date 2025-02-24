@@ -46,11 +46,6 @@ http {
         server_name  _;
         root         /usr/share/nginx/html;
 
-        location /stub_status {
-        stub_status;
-        allow 0.0.0.0;
-        }
-
         loacation /stub_status {
         stub_status;
         allow 0.0.0.0
