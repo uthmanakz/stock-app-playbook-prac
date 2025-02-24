@@ -1,7 +1,7 @@
 ---
 - name: Installing nginx on web nodes
   become: true
-  hosts: all
+  hosts: dev_nodes
   gather_facts:
 
   tasks:
