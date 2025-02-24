@@ -48,4 +48,4 @@
   
    - name: Running Prometheus/Grafana as docker container
      shell: |
-      docker-compose up -d prometheus grafana nginx-prometheus-exporter
+      docker-compose up -d prometheus grafana 
