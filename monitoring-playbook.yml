@@ -35,13 +35,17 @@
       name: git
       state: present
 
-   - name: Git clone docker-compose file
-     git: 
-      repo: 'https://github.com/uthmanakz/docker-folder.git'
-      dest: /home/ec2-user/docker-folder/
+   - name: Creating docker-compose.yml file
+     file:
+      path: /home/ec2-user/docker-compose.yml
+      state: touch
+      
     
+   - name: Configuring prometheus.yml
+     template:
+      src: templates/docker-compose.yml.j2
+      dest: /home/ec2-user/docker-compose.yml
   
    - name: Running Prometheus/Grafana as docker container
      shell: |
-      cd docker-folder
-      docker-compose up -d prometheus grafana
+      docker-compose up -d prometheus grafana nginx-prometheus-exporter
