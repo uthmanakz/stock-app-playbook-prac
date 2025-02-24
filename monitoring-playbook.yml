@@ -43,4 +43,4 @@
    - name: Running Prometheus as docker container
      shell: |
       cd docker-folder
-      docker-compose up -d prometheus
+      docker-compose up -d prometheus grafana
