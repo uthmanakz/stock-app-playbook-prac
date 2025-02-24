@@ -40,11 +40,6 @@
       repo: 'https://github.com/uthmanakz/docker-folder.git'
       dest: /home/ec2-user/docker-folder/
     
-   - name: Configuring docker-compose.yml file
-     template:
-      src: templates/docker-compose.yml.j2
-      dest: /home/ec2-user/docker-folder/docker-compose.yml
-     when: ansible_facts ['distribution'] in ['Amazon']
   
    - name: Running Prometheus/Grafana as docker container
      shell: |
