@@ -1,6 +1,6 @@
 - name: Installing Prometheus and Grafana in a container
   become: true 
-  hosts: monitor_prom
+  hosts: dev_monitor
   gather_facts: true 
 
   tasks:
