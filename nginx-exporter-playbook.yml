@@ -7,6 +7,15 @@
      yum:
       name: docker
       state: present
+     when: ansible_facts ['distribution'] in ['Amazon']
+
+
+   - name: Install Docker
+     yum:
+      name: docker.io
+      state: present
+     when: ansible_facts ['distribution'] in ['Ubuntu']
+   
    - name: Start Docker
      service:
        name: docker
