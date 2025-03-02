@@ -11,7 +11,7 @@
 
 
    - name: Install Docker
-     yum:
+     apt:
       name: docker.io
       state: present
      when: ansible_facts ['distribution'] in ['Ubuntu']
