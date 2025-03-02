@@ -1,5 +1,5 @@
 - name: Configuring nginx prometheusexporter
-  hosts: node_web_amazon
+  hosts: dev_web
   become: true
 
   tasks:
@@ -17,3 +17,8 @@
         curl -L https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m) \
         -o /usr/local/bin/docker-compose
         chmod +x /usr/local/bin/docker-compose
+
+   - name: Configuring nginx-exporter file
+     template:
+      src: templates/nginx-expo-docker-compose.yml.j2
+      dest: /tmp/nginx.yml

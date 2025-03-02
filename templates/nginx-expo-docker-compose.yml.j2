@@ -3,4 +3,4 @@
     ports:
       - "9113:9113"
     command:
-      - "--nginx.scrape-uri=http:/{{ nginx_ip }}:80/stub_status"
+      - "--nginx.scrape-uri=http:/{{ inventory_hostname }}:80/stub_status"
