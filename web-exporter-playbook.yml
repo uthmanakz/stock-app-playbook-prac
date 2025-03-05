@@ -44,7 +44,7 @@
     - name: Configuring docker-compose.yml file
       template:
        src: templates/web_exporters_docker-compose.yml.j2
-       dest: ~/docker-compose.yml
+       dest: docker-compose.yml
 
 
 
