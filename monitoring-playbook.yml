@@ -43,7 +43,7 @@
     
    - name: Configuring prometheus.yml
      template:
-      src: templates/docker-compose.yml.j2
+      src: templates/monitor_docker-compose.yml.j2
       dest: /home/ec2-user/docker-compose.yml
   
    - name: Running Prometheus/Grafana as docker container

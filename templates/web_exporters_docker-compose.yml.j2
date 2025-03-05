@@ -1,0 +1,23 @@
+services:
+  node_exporter:
+    image: quay.io/prometheus/node-exporter:latest
+    container_name: node_exporter
+    command:
+      - '--path.rootfs=/host'
+    network_mode: host
+    pid: host
+    restart: unless-stopped
+    volumes:
+      - '/:/host:ro,rslave'
+  
+
+ # source https://github.com/nginxinc/nginx-prometheus-exporter
+  nginx-prometheus-exporter:
+    image: nginx/nginx-prometheus-exporter:1.0
+    container_name: prometheus-nginx-exporter
+    command:
+      - -nginx.scrape-uri=http://{{ inventory_hostname }}/stub_status
+    ports: 
+      - 9113:9113
+
+  

@@ -1,6 +1,0 @@
-  nginx-prometheus-exporter:
-    image: nginx/nginx-prometheus-exporter:1.4.0
-    ports:
-      - "9113:9113"
-    command:
-      - "--nginx.scrape-uri=http:/{{ inventory_hostname }}:80/stub_status"
