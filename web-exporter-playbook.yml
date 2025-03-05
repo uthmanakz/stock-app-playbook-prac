@@ -41,15 +41,15 @@
        state: touch
       when: ansible_facts ['distribution'] in ['Ubuntu']
 
-    - name:
+    - name: Configuring docker-compose.yml file for Amazon
       template:
-       src: templates/web_exporters_docker-compose.yml
+       src: templates/web_exporters_docker-compose.yml.j2
        dest: /home/ec2-user/docker-compose.yml
        when: ansible_facts ['distribution'] in ['Amazon']
 
-    - name:
+    - name: Configuring docker-compose.yml file for Ubuntu
       template:
-       src: templates/web_exporters_docker-compose.yml
+       src: templates/web_exporters_docker-compose.yml.j2
        dest: /home/ubuntu/docker-compose.yml
       when: ansible_facts ['distribution'] in ['Ubuntu']
 
