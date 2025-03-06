@@ -113,7 +113,7 @@
 
   - name: Downloading jmx exporter and adding permssions
     shell: |
-     cd stockprice/targets
+     cd stockprice/target
      sudo chmod +x stock-service-0.0.1-SNAPSHOT.jar
 
   - name: Configuring jmx_exporter.yml
