@@ -15,4 +15,11 @@ scrape_configs:
       {% for host in groups['dev_web'] %}
       - "{{ hostvars[host]['public_ip_address'] }}:9113"
       {% endfor %}
+
+  - job_name: java-exporter
+    static_configs:
+     - targets:
+     {% for host in groups['dev_app'] %}
+     - "{{ hostvars[host]['public_ip_address'] }}:5556"
+     {% endfor %}
      
