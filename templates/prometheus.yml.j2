@@ -8,6 +8,9 @@ scrape_configs:
       {% for host in groups['dev_web'] %}
       - "{{ hostvars[host]['public_ip_address'] }}:9100"
       {% endfor %}
+      {% for host in groups['dev_app'] %}
+      - "{{ hostvars[host]['public_ip_address'] }}:9100"
+      {% endfor %}
 
   - job_name: nginx-exporter
     static_configs:
