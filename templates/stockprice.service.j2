@@ -1,5 +1,5 @@
 [Unit]
 
 [Service]
-ExecStart=/bin/java --javaagent:/home/{{ node_user }}/stockprice/jmx_prometheus_javaagent-1.1.0.jar=5556:/home/{{ node_user }}/stockprice/jmx_exporter.yml -jar /home/{{ node_user }}/stockprice/target/stock-service-0.0.1-SNAPSHOT.jar
+ExecStart=/bin/java -javaagent:/home/{{ node_user }}/stockprice/jmx_prometheus_javaagent-1.1.0.jar=5556:/home/{{ node_user }}/stockprice/jmx_exporter.yml -jar /home/{{ node_user }}/stockprice/target/stock-service-0.0.1-SNAPSHOT.jar
 WorkingDirectory=/home/{{ node_user }}/stockprice
