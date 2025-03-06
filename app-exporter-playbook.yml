@@ -1,0 +1,55 @@
+---
+- name: Installing nginx on web nodes
+  become: true
+  hosts: dev_app
+  gather_facts:
+
+  tasks:
+    - name: Install Docker
+      yum:
+        name: docker
+        state: present
+      when: ansible_facts ['distribution'] in ['Amazon']
+
+    - name: Install Docker 
+      apt:
+       name: docker.io
+       state: present
+      when: ansible_facts ['distribution'] in ['Ubuntu']
+
+    - name: Start Docker
+      service:
+        name: docker
+        state: started
+
+    - name: Install Docker-Compose
+      shell: |
+        curl -L https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m) \
+        -o /usr/local/bin/docker-compose
+        chmod +x /usr/local/bin/docker-compose
+
+   
+    - name: Creating docker-compose.yml file in Amazon
+      file:
+       path: /home/ec2-user/docker-compose.yml
+       state: touch
+      when: ansible_facts ['distribution'] in ['Amazon']
+
+    - name: Creating docker-compose.yml file in Ubuntu
+      file:
+       path: /home/ubuntu/docker-compose.yml
+       state: touch
+      when: ansible_facts ['distribution'] in ['Ubuntu']
+
+    - name: Configuring docker-compose.yml file
+      template:
+       src: templates/app-node-exporter.j2
+       dest: docker-compose.yml
+
+
+
+    - name: Running docker-compose file
+      shell: |
+        docker-compose up -d node_exporter
+
+    
