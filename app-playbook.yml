@@ -104,6 +104,26 @@
     systemd:
      daemon_reload: yes
 
+  - name: Downloading jmx exporter and adding permssions
+    shell: |
+     cd stockprice
+     wget https://github.com/prometheus/jmx_exporter/releases/download/1.1.0/jmx_prometheus_javaagent-1.1.0.jar
+     chmod +x jmx_prometheus_javaagent-1.1.0.jar
+     touch jmx_exporter.yml
+
+  - name: Downloading jmx exporter and adding permssions
+    shell: |
+     cd stockprice/targets
+     sudo chmod +x stock-service-0.0.1-SNAPSHOT.jar
+
+  - name: Configuring jmx_exporter.yml
+    template:
+     src: templates/jmx_exporter.yml.j2
+     dest: stockprice/
+
+
+     
+
   - name: Starting the stockprice.service 
     systemd:
      name: stockprice.service
