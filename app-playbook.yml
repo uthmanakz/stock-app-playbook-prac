@@ -119,7 +119,7 @@
   - name: Configuring jmx_exporter.yml
     template:
      src: templates/jmx_exporter.yml.j2
-     dest: stockprice/
+     dest: stockprice/jmx_exporter.yml
 
 
      
